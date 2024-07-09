@@ -7,8 +7,12 @@ on:
   workflow_dispatch:
 
 jobs:
+  build:
+    uses: ./.github/workflows/go.yml
+    secrets: inherit
   release:
-    needs: build
+    needs:
+      - build
     runs-on: ubuntu-latest
     steps:
       - name: Download artifacts
