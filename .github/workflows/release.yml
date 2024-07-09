@@ -6,10 +6,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    uses: ./.github/workflows/go.yml
-    secrets: inherit
-
   release:
     runs-on: ubuntu-latest
 
