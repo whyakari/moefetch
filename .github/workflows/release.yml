@@ -7,20 +7,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  go:
     uses: ./.github/workflows/go.yml
     secrets: inherit
   release:
     needs:
-      - build
+      - go
     runs-on: ubuntu-latest
     steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: moefetch
+        uses: actions/download-artifact@v4
 
-      - name: Release
+      - name: release
         uses: softprops/action-gh-release@v2
         with:
           files: |
