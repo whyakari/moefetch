@@ -9,13 +9,9 @@ jobs:
   build:
     uses: ./.github/workflows/go.yml
     secrets: inherit
-    
+
   release:
     runs-on: ubuntu-latest
-
-    name: Create Release with Artifact
-    needs:
-      - build
 
     steps:
       - name: Checkout Repository
