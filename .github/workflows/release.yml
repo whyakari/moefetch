@@ -1,5 +1,4 @@
 name: Release
-
 on:
   push:
     tags:
@@ -7,18 +6,27 @@ on:
   workflow_dispatch:
 
 jobs:
-  go:
+  build:
     uses: ./.github/workflows/go.yml
     secrets: inherit
+    
   release:
-    needs:
-      - go
     runs-on: ubuntu-latest
-    steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
 
-      - name: release
+    name: Create Release with Artifact
+    needs:
+      - build
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: moefetch
+
+      - name: Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
