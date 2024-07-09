@@ -1,13 +1,12 @@
 # This workflow will build a golang project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
 
-name: Go
-
+name: Release
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    tags:
+      - "v*"
+  workflow_dispatch:
 
 jobs:
 
@@ -36,3 +35,15 @@ jobs:
           path: |
               moefetch
               README.md
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: moefetch
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            moefetch
+          token: ${{ secrets.TOKEN_GITHUB }}
